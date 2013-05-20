@@ -1,3 +1,7 @@
+/**
+ * univaruints: variable length compact serialization of unsigned integers
+ * Copyright 2013,
+ **/
 #ifndef UNIVARUINTS_H
 #define UNIVARUINTS_H
 
@@ -9,5 +13,6 @@ typedef struct univaruints_reader_s {
 } univaruints_reader;
 
 uint64_t univaruints_decode_single(const uchar_t *buf, uint64_t *used);
+uint64_t univaruints_encode_single(uchar_t *buf, uint64_t v);
 
 #endif
