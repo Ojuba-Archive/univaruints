@@ -45,4 +45,4 @@ test: $(LIBS)
 	$(CC) $(CFLAGS) -I. -L. -l$(BASENAME) -o test test.c && LD_LIBRARY_PATH=$LD_LIBRARY_PATH:. ./test
 
 clean:
-	-rm test *.so* *.o *.a 2>/dev/null || :
+	-rm test *.so* *.o *.a *.tmp 2>/dev/null || :
