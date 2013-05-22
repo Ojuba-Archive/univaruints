@@ -11,6 +11,8 @@
  *
  * - uint64_t univaruints_decode_single(const uchar_t *buf, uint64_t *used);
  * - uint64_t univaruints_encode_single(uchar_t *buf, uint64_t v);
+ * - uint64_t univaruints_decode(const uchar_t *buf, uint64_t size, uint64_t *v);
+ * - uint64_t univaruints_encode(uchar_t *buf, const uint64_t *v, uint64_t count);
  *
  **/
 #ifndef UNIVARUINTS_H
@@ -31,5 +33,7 @@ uint64_t univaruints_write_single(FILE *file, uint64_t v);
 
 uint64_t univaruints_decode_single(const uchar_t *buf, uint64_t *used);
 uint64_t univaruints_encode_single(uchar_t *buf, uint64_t v);
+uint64_t univaruints_decode(const uchar_t *buf, uint64_t size, uint64_t *v);
+uint64_t univaruints_encode(uchar_t *buf, const uint64_t *v, uint64_t count);
 
 #endif

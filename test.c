@@ -46,5 +46,20 @@ int main() {
 	}
 	if (!error) printf(" pass\n");
 	else printf(" failed\n");
+	printf("Mass encoding: ... ");
+	uchar_t *out_buf=(uchar_t *)malloc(9*n);
+	uint64_t *out_list_i=(uint64_t *)malloc(sizeof(uint64_t)*n);
+	used=univaruints_encode(out_buf, list_i, n);
+	printf("Done [%d] bytes used\n", used);
+	printf("Mass decoding: ... ");
+	i=univaruints_decode(out_buf, used, out_list_i);
+	printf("Done [%d] integer decoded\n", i);
+	error|=(n!=i);
+	// assert n==i
+	for(i=0;i<n;++i) {
+		error|=(list_i[i]!=out_list_i[i]);
+	}
+	if (error) printf("failed\n");
+	printf("pass\n");
 	return 0;
 }

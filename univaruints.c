@@ -11,6 +11,8 @@
  *
  * - uint64_t univaruints_decode_single(const uchar_t *buf, uint64_t *used);
  * - uint64_t univaruints_encode_single(uchar_t *buf, uint64_t v);
+ * - uint64_t univaruints_decode(const uchar_t *buf, uint64_t size, uint64_t *v);
+ * - uint64_t univaruints_encode(uchar_t *buf, const uint64_t *v, uint64_t count);
  *
  **/
 #include "univaruints.h"
@@ -177,4 +179,35 @@ uint64_t univaruints_encode_single(uchar_t *buf, uint64_t v) {
     pack=htobe64(v); // pack is big-endian
     memcpy(buf+1, ptr+8-n, n); // read from pack into buf
     return 1+n;
+}
+/**
+ * return: number of decoded integers
+ **/
+uint64_t univaruints_decode(const uchar_t *buf, uint64_t size, uint64_t *v /*, uint64_t *used */) {
+    // we will add used when we add limit
+    const uchar_t *end=buf+size;
+    uint64_t used_i=0, used_sum=0, i=0;
+    while(buf<end) {
+        *v=univaruints_decode_single(buf, &used_i);
+        ++v;
+        buf+=used_i;
+        used_sum+=used_i;
+        ++i;
+    }
+    /* *used=used_sum; */
+    return i;
+}
+
+/**
+ * return: number of used bytes
+ **/
+uint64_t univaruints_encode(uchar_t *buf, const uint64_t *v, uint64_t count) {
+    const uint64_t *end=v+count;
+    uint64_t used=0, used_sum=0;
+    while(v<end) {
+        used=univaruints_encode_single(buf, *v++);
+        used_sum+=used;
+        buf+=used;
+    }
+    return used_sum;
 }
